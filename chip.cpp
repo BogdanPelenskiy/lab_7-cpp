@@ -76,8 +76,9 @@ void Chip::displayChips() const {
     }
 
     cout << "\n=== Список мікросхем ===\n";
-    for (const auto& chip : chips) {
-        cout << "ID: " << chip.id
+    for (size_t i = 0; i < chips.size(); ++i) {
+        const auto& chip = chips[i];
+        cout << i + 1 << ". ID: " << chip.id
              << " | Назва: " << chip.name
              << " | Виводи: " << chip.pins
              << " | Напруга: " << chip.voltage << " В\n";
@@ -124,4 +125,43 @@ void Chip::editChip() {
 void Chip::clearAll() {
     chips.clear();
     cout << "✅ Усі дані очищено.\n";
+}
+
+void Chip::insertChip() {
+    cout << "\n=== Вставка мікросхеми у довільне місце ===\n";
+
+    if (chips.empty()) {
+        cout << "Список порожній — мікросхема буде додана як перша.\n";
+    }
+
+    int position = getIntInput("Вкажіть позицію для вставки (1–" + to_string(chips.size() + 1) + "): ", 1, chips.size() + 1);
+
+    ChipData newChip;
+    newChip.id = getIntInput("Введіть ID мікросхеми (1–9999): ", 1, 9999);
+    newChip.name = getStringInput("Введіть назву/маркування: ");
+    newChip.pins = getIntInput("Введіть кількість виводів (1–200): ", 1, 200);
+    newChip.voltage = getDoubleInput("Введіть напругу живлення (0.5–20 В): ", 0.5, 20.0);
+
+    chips.insert(chips.begin() + (position - 1), newChip);
+    cout << "✅ Мікросхему вставлено у позицію " << position << ".\n";
+}
+
+void Chip::swapChips() {
+    cout << "\n=== Обмін двох мікросхем ===\n";
+
+    if (chips.size() < 2) {
+        cout << "❌ Недостатньо елементів для обміну (потрібно мінімум 2).\n";
+        return;
+    }
+
+    int first = getIntInput("Введіть позицію першої мікросхеми (1–" + to_string(chips.size()) + "): ", 1, chips.size());
+    int second = getIntInput("Введіть позицію другої мікросхеми (1–" + to_string(chips.size()) + "): ", 1, chips.size());
+
+    if (first == second) {
+        cout << "⚠️ Позиції збігаються — обмін не потрібен.\n";
+        return;
+    }
+
+    swap(chips[first - 1], chips[second - 1]);
+    cout << "✅ Мікросхеми на позиціях " << first << " і " << second << " успішно обміняні!\n";
 }

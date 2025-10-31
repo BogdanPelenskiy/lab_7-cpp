@@ -14,17 +14,19 @@ int main() {
         cout << "3. Редагувати мікросхему\n";
         cout << "4. Видалити мікросхему\n";
         cout << "5. Очистити список\n";
+        cout << "6. Вставити мікросхему у довільне місце\n";
+        cout << "7. Обміняти місцями дві мікросхеми\n";
         cout << "0. Вихід\n";
         cout << "Ваш вибір: ";
 
         if (!(cin >> choice)) {
-            cout << "❌ Помилка вводу! Введіть число від 0 до 5.\n";
+            cout << "❌ Помилка вводу! Введіть число від 0 до 7.\n";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             continue;
         }
 
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // очистка буфера
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // очищення буфера
 
         switch (choice) {
         case 1:
@@ -42,11 +44,17 @@ int main() {
         case 5:
             chipList.clearAll();
             break;
+        case 6:
+            chipList.insertChip();
+            break;
+        case 7:
+            chipList.swapChips();
+            break;
         case 0:
             cout << "Завершення роботи.\n";
             break;
         default:
-            cout << "❌ Невірний вибір! Введіть число від 0 до 5.\n";
+            cout << "❌ Невірний вибір! Введіть число від 0 до 7.\n";
         }
     } while (choice != 0);
 

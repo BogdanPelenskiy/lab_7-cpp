@@ -26,6 +26,8 @@ public:
     void removeChip();            // Видалити
     void editChip();              // Редагувати
     void clearAll();              // Очистити все
+    void insertChip();            // Вставити мікросхему у довільне місце
+    void swapChips();             // Обміняти місцями дві мікросхеми
 
 private:
     bool isValidPins(int pins);
